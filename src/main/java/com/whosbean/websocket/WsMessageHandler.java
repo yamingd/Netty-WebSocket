@@ -1,11 +1,14 @@
 package com.whosbean.websocket;
 
 
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
 
 public class WsMessageHandler extends SimpleChannelInboundHandler<WebSocketFrame>
 {
@@ -48,7 +51,14 @@ public class WsMessageHandler extends SimpleChannelInboundHandler<WebSocketFrame
         if (frame instanceof TextWebSocketFrame){
             TextWebSocketFrame text = (TextWebSocketFrame)frame;
             System.out.println(text.text());
-            ctx.channel().writeAndFlush(new TextWebSocketFrame(text.text()));
+            ChannelFuture future = ctx.channel().writeAndFlush(new TextWebSocketFrame(text.text()));
+            future.addListener(new GenericFutureListener<Future<Void>>() {
+                @Override
+                public void operationComplete(Future<Void> future) throws Exception {
+                    System.out.println("write to channels successful");
+                }
+            });
+
         }else{
             System.out.println(frame.toString());
         }

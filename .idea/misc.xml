@@ -29,9 +29,6 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
-  <component name="SvnConfiguration" myUseAcceleration="nothing">
-    <configuration useDefault="false">C:\Documents and Settings\zhza4586\Application Data\Subversion</configuration>
-  </component>
   <component name="masterDetails">
     <states>
       <state key="Copyright.UI">

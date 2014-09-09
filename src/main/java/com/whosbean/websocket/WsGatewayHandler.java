@@ -5,7 +5,6 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.util.CharsetUtil;
 
 /**
@@ -27,7 +26,7 @@ public class WsGatewayHandler extends SimpleChannelInboundHandler<FullHttpReques
     {
         String uri = req.getUri();
 
-        System.out.println(uri);
+        System.out.println("channelRead0: " + uri);
 
         /*AppPlug<?,?> ap = AppRegistry.getApp(uri);
 
@@ -42,7 +41,7 @@ public class WsGatewayHandler extends SimpleChannelInboundHandler<FullHttpReques
         ctx.channel().attr(appPlugKey).set(ap);*/
 
         // add websocket handler for the request uri where app lives
-        ctx.pipeline().addLast(new WebSocketServerProtocolHandler(uri));
+        ctx.pipeline().addLast(new WsServerProtocolHandler(uri));
 
         // now add our application handler
         ctx.pipeline().addLast(new WsMessageHandler());
@@ -54,4 +53,9 @@ public class WsGatewayHandler extends SimpleChannelInboundHandler<FullHttpReques
         ctx.fireChannelRead(req);
     }
 
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        super.channelInactive(ctx);
+        System.out.println("channelInactive: " + ctx.toString());
+    }
 }

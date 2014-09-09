@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://E://Netty-WebSocket/Netty-WebSocket.iml" filepath="E://Netty-WebSocket/Netty-WebSocket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Netty-WebSocket.iml" filepath="$PROJECT_DIR$/Netty-WebSocket.iml" />
     </modules>
   </component>
 </project>

@@ -4,9 +4,7 @@ package com.whosbean.websocket;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 
@@ -59,9 +57,11 @@ public class WsMessageHandler extends SimpleChannelInboundHandler<WebSocketFrame
                 }
             });
 
-        }else{
-            System.out.println(frame.toString());
+        }else if(frame instanceof BinaryWebSocketFrame){
+            BinaryWebSocketFrame b = (BinaryWebSocketFrame)frame;
+            int len = b.content().readableBytes();
+            byte[] bytes = new byte[len];
+            b.content().readBytes(bytes);
         }
-
     }
 }
